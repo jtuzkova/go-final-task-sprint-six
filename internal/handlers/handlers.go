@@ -11,17 +11,13 @@ import (
 )
 
 func MainHandle(w http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != `/` {
-		http.NotFound(w, req)
-		return
-	}
-
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	if req.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		fmt.Fprintf(w, "Сервер не поддерживает %s запросы", req.Method)
         return
 	}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
 	http.ServeFile(w, req, "../index.html")
 }
 
@@ -74,7 +70,7 @@ func UploadHandle(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprintf(w, "Conversion successful!\n\nInput: %s\n\nOutput: %s\n\n", 
 		input, result)
